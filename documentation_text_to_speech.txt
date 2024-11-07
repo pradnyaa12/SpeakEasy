@@ -1,0 +1,54 @@
+This program is a simple Text-to-Speech (TTS) application using Python's Tkinter library for the GUI, 
+the pyttsx3 library for text-to-speech, and PIL (Pillow) to handle images for the app icon and buttons. 
+The application allows users to input text, choose a voice (Male or Female), adjust the speech speed (Fast, Normal, Slow),
+and either listen to the text or save it as an MP3 file.
+
+Here’s an overview of each component and how they work together:
+
+Components and Workflow
+Setting Up the GUI with Tkinter:
+
+A Tkinter Tk() root window is created, with a title, fixed size, and blue background color.
+The root window is configured to be non-resizable, with a specific geometry (900x450).
+The iconphoto() method sets the app icon from an image (speak.png), and a top frame (top_frame) is created to
+ hold the logo and application title.
+The main title ("Text to Speech") is displayed on the top_frame, styled in bold Arial font.
+Adding a Placeholder to the Text Area:
+
+A Text widget (text_area) is added for the user to input text. It has an initial placeholder text, "Type here," in grey.
+Placeholder behavior is achieved by binding FocusIn and FocusOut events to remove_placeholder() and add_placeholder() functions, respectively.
+When the user clicks in the text area (FocusIn), the placeholder is removed.
+When the user clicks away (FocusOut), the placeholder text reappears if no input has been typed.
+Speech Settings Selection (Voice and Speed):
+
+Voice Selection: A Combobox named gender_combobox allows the user to choose between "Female" and "Male" voices.
+Speed Selection: Another Combobox, speed_combobox, provides options for "Fast," "Normal," and "Slow" speech speeds.
+Both comboboxes are given default values ("Female" for voice and "Normal" for speed) and are placed beside corresponding labels.
+Speak Button:
+
+The Speak button uses an image icon (speak.png) and triggers the speaknow() function.
+In speaknow(), the selected text is read aloud using pyttsx3. It:
+Checks for the placeholder text. If the text area is empty or still has "Type here," it does nothing.
+Sets the gender and speed according to the user’s selections and configures the speech engine accordingly.
+Finally, engine.runAndWait() is called to start speaking the text aloud.
+Save (Download) Button:
+
+The Save button uses an image icon (download.png) and triggers the download() function.
+In download():
+The function checks if the text area is empty or contains only the placeholder. If so, it calls show_notification("Please type something first before saving") to display a temporary message.
+If text is present, it configures the TTS engine to match the selected voice and speed.
+After configuring, it prompts the user to choose a folder to save the file, saves the audio file as text.mp3 in the selected location, and calls show_notification() to notify the user that the file has been saved.
+Temporary Notification (show_notification function):
+
+This function displays a temporary notification at a specified location (x=550, y=350).
+A Label is created to show the message, and it automatically disappears after 3 seconds with root.after(3000, notification_label.destroy).
+Images and Icons
+Icons and logos are loaded using the PIL library (Image and ImageTk.PhotoImage), which converts image files into formats compatible with Tkinter widgets.
+
+Example Workflow:
+The user types or pastes text in the text area.
+They select a voice and speed from the dropdown menus.
+If they press Speak, the application reads the text aloud using the selected voice and speed.
+If they press Save, the application converts the text to an MP3 file and saves it to the chosen directory.
+If the text area is empty or only contains the placeholder, a temporary notification appears, prompting the user to type text before saving.
+This setup provides a user-friendly interface for performing text-to-speech and saving spoken text as an audio file.
